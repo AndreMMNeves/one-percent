@@ -130,7 +130,7 @@ export default function ConfiguracoesPage() {
           </div>
         </div>
         {saved && (
-          <div className="text-xs text-emerald-400 flex items-center gap-1">
+          <div className="text-xs text-good flex items-center gap-1">
             <Save className="w-3 h-3" /> Salvo
           </div>
         )}
@@ -138,7 +138,7 @@ export default function ConfiguracoesPage() {
 
       <div className="card space-y-3">
         <h3 className="heading text-xl">Tom de comunicação</h3>
-        <p className="text-sm text-ink-400">
+        <p className="text-sm text-muted">
           Define como o sistema fala com você nas notificações e cobranças.
         </p>
         <div className="grid sm:grid-cols-3 gap-2">
@@ -154,12 +154,12 @@ export default function ConfiguracoesPage() {
               onClick={() => save({ tone: o.t })}
               className={`text-left p-4 rounded-lg border transition ${
                 profile.tone === o.t
-                  ? "border-flame-500 bg-flame-500/10"
-                  : "border-white/10 hover:border-white/30"
+                  ? "border-accent bg-accent/10"
+                  : "border-border hover:border-border-strong"
               }`}
             >
               <div className="font-semibold">{o.label}</div>
-              <div className="text-xs text-ink-400">{o.desc}</div>
+              <div className="text-xs text-muted">{o.desc}</div>
             </button>
           ))}
         </div>
@@ -167,16 +167,16 @@ export default function ConfiguracoesPage() {
 
       <div className="card space-y-3">
         <h3 className="heading text-xl">Notificações</h3>
-        <p className="text-sm text-ink-400">
+        <p className="text-sm text-muted">
           O sistema mostra alertas dentro do app. Para notificações nativas do
           navegador, autorize abaixo.
         </p>
         {notifPermission === "granted" ? (
-          <div className="flex items-center gap-2 text-emerald-400 text-sm">
+          <div className="flex items-center gap-2 text-good text-sm">
             <Bell className="w-4 h-4" /> Notificações nativas ativas
           </div>
         ) : notifPermission === "unsupported" ? (
-          <div className="flex items-center gap-2 text-ink-400 text-sm">
+          <div className="flex items-center gap-2 text-muted text-sm">
             <BellOff className="w-4 h-4" /> Não suportado neste navegador
           </div>
         ) : (
@@ -186,9 +186,9 @@ export default function ConfiguracoesPage() {
         )}
       </div>
 
-      <div className="card border-rose-500/30 space-y-3">
-        <h3 className="heading text-xl text-rose-400">Zona perigosa</h3>
-        <p className="text-sm text-ink-400">
+      <div className="card border-bad/30 space-y-3">
+        <h3 className="heading text-xl text-bad">Zona perigosa</h3>
+        <p className="text-sm text-muted">
           Apaga todos os dados deste dispositivo. Não há backup remoto.
         </p>
         <button onClick={reset} className="btn-danger">

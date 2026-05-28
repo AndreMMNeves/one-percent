@@ -50,13 +50,13 @@ export function NotificationsHost() {
       {toasts.map((t) => (
         <div
           key={t.id}
-          className="card animate-slide-up flex items-start gap-3 border-flame-500/30"
+          className="card animate-slide-up flex items-start gap-3 border-accent/30"
         >
-          <Bell className="w-5 h-5 text-flame-400 mt-0.5 shrink-0" />
+          <Bell className="w-5 h-5 text-accent mt-0.5 shrink-0" />
           <div className="flex-1 text-sm">{t.text}</div>
           <button
             onClick={() => setToasts((arr) => arr.filter((x) => x.id !== t.id))}
-            className="text-ink-400 hover:text-ink-50"
+            className="text-muted hover:text-foreground"
           >
             <X className="w-4 h-4" />
           </button>

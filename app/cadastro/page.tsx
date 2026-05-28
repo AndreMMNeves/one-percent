@@ -67,12 +67,12 @@ export default function CadastroPage() {
     <div className="min-h-screen grid place-items-center px-4 py-8">
       <div className="w-full max-w-xl">
         <div className="flex items-center gap-3 mb-8 justify-center">
-          <div className="w-12 h-12 rounded-xl bg-flame-500 grid place-items-center shadow-lg shadow-flame-500/40">
-            <Flame className="w-6 h-6 text-ink-950" />
+          <div className="w-12 h-12 rounded-xl bg-accent grid place-items-center shadow-lg shadow-flame-500/40">
+            <Flame className="w-6 h-6 text-accent-foreground" />
           </div>
           <div>
             <div className="heading text-3xl">ONE PERCENT</div>
-            <div className="text-xs uppercase tracking-[0.25em] text-ink-400">
+            <div className="text-xs uppercase tracking-[0.25em] text-muted">
               começa aqui
             </div>
           </div>
@@ -84,7 +84,7 @@ export default function CadastroPage() {
               <div
                 key={s}
                 className={`h-1.5 flex-1 rounded-full transition ${
-                  i <= stepIdx ? "bg-flame-500" : "bg-white/10"
+                  i <= stepIdx ? "bg-accent" : "bg-card-hover"
                 }`}
               />
             ))}
@@ -93,7 +93,7 @@ export default function CadastroPage() {
           {step === "perfil" && (
             <div className="space-y-4 animate-fade-in">
               <h2 className="heading text-2xl">Sobre você</h2>
-              <p className="text-ink-400 text-sm">
+              <p className="text-muted text-sm">
                 Vamos começar pelo essencial.
               </p>
               <div>
@@ -135,7 +135,7 @@ export default function CadastroPage() {
           {step === "corpo" && (
             <div className="space-y-4 animate-fade-in">
               <h2 className="heading text-2xl">Medidas atuais</h2>
-              <p className="text-ink-400 text-sm">
+              <p className="text-muted text-sm">
                 Usaremos para calcular IMC, calorias e gordura corporal.
               </p>
               <div className="grid grid-cols-2 gap-3">
@@ -182,7 +182,7 @@ export default function CadastroPage() {
               </div>
 
               <details className="text-sm">
-                <summary className="cursor-pointer text-ink-300 hover:text-ink-50">
+                <summary className="cursor-pointer text-muted-foreground hover:text-foreground">
                   Opcional: medidas para estimar gordura corporal
                 </summary>
                 <div className="grid grid-cols-3 gap-3 mt-3">
@@ -243,7 +243,7 @@ export default function CadastroPage() {
           {step === "objetivo" && (
             <div className="space-y-4 animate-fade-in">
               <h2 className="heading text-2xl">Qual seu objetivo?</h2>
-              <p className="text-ink-400 text-sm">
+              <p className="text-muted text-sm">
                 Vamos ajustar dieta, calorias e desafios em torno disso.
               </p>
               <div className="grid gap-2">
@@ -261,8 +261,8 @@ export default function CadastroPage() {
                     onClick={() => setGoal(g)}
                     className={`text-left p-4 rounded-lg border transition ${
                       goal === g
-                        ? "border-flame-500 bg-flame-500/10"
-                        : "border-white/10 hover:border-white/30"
+                        ? "border-accent bg-accent/10"
+                        : "border-border hover:border-border-strong"
                     }`}
                   >
                     <div className="font-semibold">{goalLabel(g)}</div>
@@ -275,7 +275,7 @@ export default function CadastroPage() {
           {step === "tom" && (
             <div className="space-y-4 animate-fade-in">
               <h2 className="heading text-2xl">Como devo falar com você?</h2>
-              <p className="text-ink-400 text-sm">
+              <p className="text-muted text-sm">
                 Notificações, frases e cobranças seguem esse tom. Pode mudar depois.
               </p>
               <div className="grid gap-2">
@@ -303,12 +303,12 @@ export default function CadastroPage() {
                     onClick={() => setTone(o.t)}
                     className={`text-left p-4 rounded-lg border transition ${
                       tone === o.t
-                        ? "border-flame-500 bg-flame-500/10"
-                        : "border-white/10 hover:border-white/30"
+                        ? "border-accent bg-accent/10"
+                        : "border-border hover:border-border-strong"
                     }`}
                   >
                     <div className="font-semibold">{o.title}</div>
-                    <div className="text-sm text-ink-400">{o.desc}</div>
+                    <div className="text-sm text-muted">{o.desc}</div>
                   </button>
                 ))}
               </div>

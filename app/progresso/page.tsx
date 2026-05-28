@@ -139,7 +139,7 @@ export default function ProgressoPage() {
               </LineChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-full grid place-items-center text-ink-400 text-sm">
+            <div className="h-full grid place-items-center text-muted text-sm">
               Registre seu peso por alguns dias para ver o gráfico.
             </div>
           )}
@@ -188,7 +188,7 @@ export default function ProgressoPage() {
                 </BarChart>
               </ResponsiveContainer>
             ) : (
-              <div className="h-full grid place-items-center text-ink-400 text-sm">
+              <div className="h-full grid place-items-center text-muted text-sm">
                 Sem dados ainda.
               </div>
             )}
@@ -215,7 +215,7 @@ export default function ProgressoPage() {
                 </BarChart>
               </ResponsiveContainer>
             ) : (
-              <div className="h-full grid place-items-center text-ink-400 text-sm">
+              <div className="h-full grid place-items-center text-muted text-sm">
                 Sem dados ainda.
               </div>
             )}
@@ -234,16 +234,16 @@ export default function ProgressoPage() {
                 title={`${l.name} (${l.xpRequired} XP)`}
                 className={`aspect-square rounded text-[10px] font-bold grid place-items-center transition ${
                   unlocked
-                    ? "bg-flame-500/80 text-ink-950"
-                    : "bg-white/5 text-ink-500"
-                } ${l.level === lvl.level ? "ring-2 ring-flame-400" : ""}`}
+                    ? "bg-accent/80 text-accent-foreground"
+                    : "bg-card-hover text-muted"
+                } ${l.level === lvl.level ? "ring-2 ring-accent" : ""}`}
               >
                 {l.level}
               </div>
             );
           })}
         </div>
-        <div className="text-xs text-ink-400 mt-3">
+        <div className="text-xs text-muted mt-3">
           Passe o mouse para ver o nome de cada nível.
         </div>
       </div>

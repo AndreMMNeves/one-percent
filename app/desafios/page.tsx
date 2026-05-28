@@ -108,10 +108,10 @@ export default function DesafiosPage() {
         action={
           <div className="flex items-center gap-3">
             <div className="text-right">
-              <div className="text-xs uppercase tracking-wider text-ink-400">
+              <div className="text-xs uppercase tracking-wider text-muted">
                 XP hoje
               </div>
-              <div className="text-2xl font-bold text-flame-400">+{totalToday}</div>
+              <div className="text-2xl font-bold text-accent">+{totalToday}</div>
             </div>
           </div>
         }
@@ -126,8 +126,8 @@ export default function DesafiosPage() {
             onClick={() => setFilter(f as typeof filter)}
             className={`px-3 py-1.5 rounded-full text-xs font-semibold transition ${
               filter === f
-                ? "bg-flame-500 text-ink-950"
-                : "bg-white/5 text-ink-300 hover:bg-white/10"
+                ? "bg-accent text-accent-foreground"
+                : "bg-card-hover text-muted-foreground hover:bg-card-hover"
             }`}
           >
             {f === "todos" ? "Todos" : CATEGORY_LABEL[f as Challenge["category"]]}
@@ -136,10 +136,10 @@ export default function DesafiosPage() {
       </div>
 
       {feedback && (
-        <div className="card border-flame-500/30 animate-fade-in flex items-center justify-between">
+        <div className="card border-accent/30 animate-fade-in flex items-center justify-between">
           <div className="text-sm">{feedback}</div>
           <button
-            className="text-ink-400 hover:text-ink-50"
+            className="text-muted hover:text-foreground"
             onClick={() => setFeedback(null)}
           >
             <X className="w-4 h-4" />
@@ -166,7 +166,7 @@ export default function DesafiosPage() {
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1">
-                  <div className="text-[10px] uppercase tracking-wider text-ink-400 mb-0.5">
+                  <div className="text-[10px] uppercase tracking-wider text-muted mb-0.5">
                     {CATEGORY_LABEL[c.category]} ·{" "}
                     {c.recurrence === "diario"
                       ? "diário"
@@ -175,9 +175,9 @@ export default function DesafiosPage() {
                         : "único"}
                   </div>
                   <div className="font-semibold text-lg">{c.title}</div>
-                  <div className="text-sm text-ink-400 mt-1">{c.description}</div>
+                  <div className="text-sm text-muted mt-1">{c.description}</div>
                 </div>
-                <div className="text-flame-400 font-bold shrink-0">+{c.xp}xp</div>
+                <div className="text-accent font-bold shrink-0">+{c.xp}xp</div>
               </div>
 
               <div className="mt-4 flex flex-wrap gap-2">
@@ -222,11 +222,11 @@ export default function DesafiosPage() {
 
       <div className="card">
         <div className="flex items-center gap-2 mb-2">
-          <Trophy className="w-5 h-5 text-flame-400" />
+          <Trophy className="w-5 h-5 text-accent" />
           <h3 className="heading text-xl">Conquistados hoje</h3>
         </div>
         {completed.filter((c) => c.completedAt.slice(0, 10) === today).length === 0 ? (
-          <div className="text-sm text-ink-400">Nada ainda. Bora começar.</div>
+          <div className="text-sm text-muted">Nada ainda. Bora começar.</div>
         ) : (
           <ul className="text-sm space-y-1">
             {completed
@@ -236,7 +236,7 @@ export default function DesafiosPage() {
                 return (
                   <li key={c.id} className="flex items-center justify-between">
                     <span>{ch?.title ?? c.challengeId}</span>
-                    <span className="text-flame-400 font-semibold">+{c.xpAwarded}xp</span>
+                    <span className="text-accent font-semibold">+{c.xpAwarded}xp</span>
                   </li>
                 );
               })}
@@ -268,10 +268,10 @@ function TimerCard({
   const seconds = Math.floor((remaining % 60000) / 1000);
   if (remaining === 0) {
     return (
-      <div className="card border-flame-500/40">
+      <div className="card border-accent/40">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <div className="text-xs text-ink-400 uppercase tracking-wider">Timer</div>
+            <div className="text-xs text-muted uppercase tracking-wider">Timer</div>
             <div className="heading text-2xl">{challenge.title} — Concluído!</div>
           </div>
           <button onClick={onFinish} className="btn-primary">
@@ -282,14 +282,14 @@ function TimerCard({
     );
   }
   return (
-    <div className="card border-flame-500/30">
+    <div className="card border-accent/30">
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <div>
-          <div className="text-xs text-ink-400 uppercase tracking-wider flex items-center gap-2">
+          <div className="text-xs text-muted uppercase tracking-wider flex items-center gap-2">
             <Clock className="w-3 h-3" /> Timer ativo
           </div>
           <div className="heading text-2xl">{challenge.title}</div>
-          <div className="text-4xl font-bold text-flame-400 mt-1 tabular-nums">
+          <div className="text-4xl font-bold text-accent mt-1 tabular-nums">
             {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
           </div>
         </div>

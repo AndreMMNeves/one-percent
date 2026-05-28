@@ -49,8 +49,8 @@ export default function NotasPage() {
                 onClick={() => setCategory(c.key)}
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold transition ${
                   category === c.key
-                    ? "bg-flame-500 text-ink-950"
-                    : "bg-white/5 text-ink-300 hover:bg-white/10"
+                    ? "bg-accent text-accent-foreground"
+                    : "bg-card-hover text-muted-foreground hover:bg-card-hover"
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />
@@ -82,7 +82,7 @@ export default function NotasPage() {
         <button
           onClick={() => setFilter("todas")}
           className={`px-3 py-1.5 rounded-full text-xs font-semibold ${
-            filter === "todas" ? "bg-flame-500 text-ink-950" : "bg-white/5 text-ink-300"
+            filter === "todas" ? "bg-accent text-accent-foreground" : "bg-card-hover text-muted-foreground"
           }`}
         >
           Todas ({notes.length})
@@ -94,7 +94,7 @@ export default function NotasPage() {
               key={c.key}
               onClick={() => setFilter(c.key)}
               className={`px-3 py-1.5 rounded-full text-xs font-semibold ${
-                filter === c.key ? "bg-flame-500 text-ink-950" : "bg-white/5 text-ink-300"
+                filter === c.key ? "bg-accent text-accent-foreground" : "bg-card-hover text-muted-foreground"
               }`}
             >
               {c.label} ({count})
@@ -105,7 +105,7 @@ export default function NotasPage() {
 
       <div className="grid sm:grid-cols-2 gap-3">
         {visible.length === 0 && (
-          <div className="text-sm text-ink-400">Nenhuma nota ainda.</div>
+          <div className="text-sm text-muted">Nenhuma nota ainda.</div>
         )}
         {visible.map((n) => {
           const C = CATEGORIES.find((c) => c.key === n.category)!;
@@ -113,20 +113,20 @@ export default function NotasPage() {
           return (
             <div key={n.id} className="card">
               <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2 text-xs text-ink-400">
+                <div className="flex items-center gap-2 text-xs text-muted">
                   <Icon className="w-3.5 h-3.5" />
                   {C.label} ·{" "}
                   {new Date(n.createdAt).toLocaleDateString("pt-BR")}
                 </div>
                 <button
                   onClick={() => removeNote(n.id)}
-                  className="text-ink-400 hover:text-rose-400"
+                  className="text-muted hover:text-bad"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
               <div className="font-semibold mt-1">{n.title}</div>
-              <p className="text-sm text-ink-300 whitespace-pre-wrap mt-1">{n.body}</p>
+              <p className="text-sm text-muted-foreground whitespace-pre-wrap mt-1">{n.body}</p>
             </div>
           );
         })}

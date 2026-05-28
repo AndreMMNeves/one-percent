@@ -16,10 +16,10 @@ export function QuoteBanner() {
       </div>
       <div className="relative">
         <div className="section-title mb-2">Frase do dia</div>
-        <p className="text-lg leading-snug font-medium text-ink-50">
+        <p className="text-lg leading-snug font-medium text-foreground">
           &ldquo;{quote.text}&rdquo;
         </p>
-        <div className="text-sm text-ink-400 mt-2">— {quote.author}</div>
+        <div className="text-sm text-muted mt-2">— {quote.author}</div>
       </div>
     </div>
   );

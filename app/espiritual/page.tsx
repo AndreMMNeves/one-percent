@@ -65,21 +65,21 @@ export default function EspiritualPage() {
         subtitle="Estudo, fé e reflexão. O corpo treina, a alma também."
       />
 
-      <div className="card border-flame-500/20">
-        <div className="flex items-center gap-2 text-xs text-ink-400 uppercase tracking-wider mb-2">
-          <Sparkles className="w-3.5 h-3.5 text-flame-400" />
+      <div className="card border-accent/20">
+        <div className="flex items-center gap-2 text-xs text-muted uppercase tracking-wider mb-2">
+          <Sparkles className="w-3.5 h-3.5 text-accent" />
           Versículo do dia
         </div>
         <p className="text-lg leading-snug">&ldquo;{verseToday.text}&rdquo;</p>
-        <div className="text-sm text-flame-400 mt-2 font-semibold">{verseToday.ref}</div>
+        <div className="text-sm text-accent mt-2 font-semibold">{verseToday.ref}</div>
       </div>
 
       <div className="card">
-        <div className="flex items-center gap-2 text-xs text-ink-400 uppercase tracking-wider mb-2">
+        <div className="flex items-center gap-2 text-xs text-muted uppercase tracking-wider mb-2">
           <BookOpen className="w-3.5 h-3.5" />
           Pergunta para meditação
         </div>
-        <p className="text-base text-ink-100">{reflectionToday}</p>
+        <p className="text-base text-foreground">{reflectionToday}</p>
       </div>
 
       <div className="card space-y-3">
@@ -106,24 +106,24 @@ export default function EspiritualPage() {
       <div>
         <h3 className="heading text-xl mb-3">Suas reflexões</h3>
         {spiritualNotes.length === 0 ? (
-          <div className="text-sm text-ink-400">Nenhuma reflexão ainda.</div>
+          <div className="text-sm text-muted">Nenhuma reflexão ainda.</div>
         ) : (
           <div className="grid sm:grid-cols-2 gap-3">
             {spiritualNotes.map((n) => (
               <div key={n.id} className="card">
                 <div className="flex items-center justify-between gap-2">
-                  <div className="text-xs text-ink-400">
+                  <div className="text-xs text-muted">
                     {new Date(n.createdAt).toLocaleDateString("pt-BR")}
                   </div>
                   <button
                     onClick={() => removeNote(n.id)}
-                    className="text-ink-400 hover:text-rose-400"
+                    className="text-muted hover:text-bad"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
                 <div className="font-semibold mt-1">{n.title}</div>
-                <p className="text-sm text-ink-300 whitespace-pre-wrap mt-1">{n.body}</p>
+                <p className="text-sm text-muted-foreground whitespace-pre-wrap mt-1">{n.body}</p>
               </div>
             ))}
           </div>

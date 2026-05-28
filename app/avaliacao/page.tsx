@@ -153,20 +153,20 @@ export default function AvaliacaoPage() {
           <Save className="w-4 h-4" /> Avaliar e receber sugestões
         </button>
         {savedMsg && (
-          <div className="text-sm text-emerald-400">{savedMsg}</div>
+          <div className="text-sm text-good">{savedMsg}</div>
         )}
       </div>
 
       {suggestions && (
-        <div className="card border-flame-500/30">
+        <div className="card border-accent/30">
           <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="w-5 h-5 text-flame-400" />
+            <Sparkles className="w-5 h-5 text-accent" />
             <h3 className="heading text-xl">Sugestões personalizadas</h3>
           </div>
           <ul className="space-y-3">
             {suggestions.map((s, i) => (
               <li key={i} className="flex gap-3">
-                <div className="text-flame-400 font-bold text-sm w-24 shrink-0">
+                <div className="text-accent font-bold text-sm w-24 shrink-0">
                   {s.area}
                 </div>
                 <div className="text-sm">{s.text}</div>
@@ -178,7 +178,7 @@ export default function AvaliacaoPage() {
 
       {last && !suggestions && (
         <div className="card">
-          <div className="text-xs text-ink-400 uppercase tracking-wider mb-1">
+          <div className="text-xs text-muted uppercase tracking-wider mb-1">
             Última avaliação ({new Date(last.date).toLocaleDateString("pt-BR")})
           </div>
           <div className="grid grid-cols-5 gap-2 text-center">
@@ -189,9 +189,9 @@ export default function AvaliacaoPage() {
               ["Energia", last.energy],
               ["Foco", last.focus],
             ].map(([label, v]) => (
-              <div key={label as string} className="p-3 bg-white/5 rounded-lg">
-                <div className="text-2xl font-bold text-flame-400">{v}</div>
-                <div className="text-[10px] text-ink-400 uppercase tracking-wider">
+              <div key={label as string} className="p-3 bg-card-hover rounded-lg">
+                <div className="text-2xl font-bold text-accent">{v}</div>
+                <div className="text-[10px] text-muted uppercase tracking-wider">
                   {label}
                 </div>
               </div>
@@ -216,7 +216,7 @@ function SliderRow({
     <div>
       <div className="flex items-center justify-between mb-2">
         <label className="text-sm font-semibold">{label}</label>
-        <span className="text-2xl font-bold text-flame-400 tabular-nums">{value}</span>
+        <span className="text-2xl font-bold text-accent tabular-nums">{value}</span>
       </div>
       <input
         type="range"
@@ -224,9 +224,9 @@ function SliderRow({
         max={10}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full accent-flame-500"
+        className="w-full accent-orange-500"
       />
-      <div className="flex justify-between text-[10px] text-ink-400 mt-1">
+      <div className="flex justify-between text-[10px] text-muted mt-1">
         <span>fraco</span>
         <span>excelente</span>
       </div>

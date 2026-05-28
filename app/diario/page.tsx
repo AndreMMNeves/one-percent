@@ -214,7 +214,7 @@ export default function DiarioPage() {
                   setCaloriesIn(e.target.value ? Number(e.target.value) : "")
                 }
               />
-              <div className="text-[10px] text-ink-400 mt-1">meta {targets.cals}</div>
+              <div className="text-[10px] text-muted mt-1">meta {targets.cals}</div>
             </div>
             <div>
               <label className="label">Proteína (g)</label>
@@ -226,7 +226,7 @@ export default function DiarioPage() {
                   setProteinG(e.target.value ? Number(e.target.value) : "")
                 }
               />
-              <div className="text-[10px] text-ink-400 mt-1">meta {targets.protein}g</div>
+              <div className="text-[10px] text-muted mt-1">meta {targets.protein}g</div>
             </div>
             <div>
               <label className="label">Água (ml)</label>
@@ -238,7 +238,7 @@ export default function DiarioPage() {
                   setWaterMl(e.target.value ? Number(e.target.value) : "")
                 }
               />
-              <div className="text-[10px] text-ink-400 mt-1">meta {targets.water}ml</div>
+              <div className="text-[10px] text-muted mt-1">meta {targets.water}ml</div>
             </div>
           </div>
           <div>
@@ -263,8 +263,8 @@ export default function DiarioPage() {
                   onClick={() => setMood(m as 1 | 2 | 3 | 4 | 5)}
                   className={`flex-1 py-3 rounded-lg border transition flex items-center justify-center gap-2 ${
                     mood === m
-                      ? "border-flame-500 bg-flame-500/10 text-flame-400"
-                      : "border-white/10 hover:border-white/30"
+                      ? "border-accent bg-accent/10 text-accent"
+                      : "border-border hover:border-border-strong"
                   }`}
                 >
                   {m === 1 && <Frown className="w-5 h-5" />}
@@ -295,7 +295,7 @@ export default function DiarioPage() {
           {saved ? "Salvo" : "Salvar registro"}
         </button>
         {feedback && (
-          <div className="text-sm text-ink-300 animate-fade-in flex-1">
+          <div className="text-sm text-muted-foreground animate-fade-in flex-1">
             {feedback}
           </div>
         )}

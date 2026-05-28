@@ -26,7 +26,7 @@ export function OnboardingGate({ children }: { children: React.ReactNode }) {
   if (!mounted || !hydrated) {
     return (
       <div className="min-h-screen grid place-items-center">
-        <div className="text-ink-400 text-sm animate-pulse">Carregando…</div>
+        <div className="text-muted text-sm animate-pulse">Carregando…</div>
       </div>
     );
   }

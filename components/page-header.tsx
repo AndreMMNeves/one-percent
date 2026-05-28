@@ -10,7 +10,7 @@ export function PageHeader({ title, subtitle, action }: PageHeaderProps) {
       <div>
         <h1 className="heading text-3xl sm:text-4xl">{title}</h1>
         {subtitle && (
-          <p className="text-ink-400 mt-1 max-w-2xl">{subtitle}</p>
+          <p className="text-muted mt-1 max-w-2xl">{subtitle}</p>
         )}
       </div>
       {action}

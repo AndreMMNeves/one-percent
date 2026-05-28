@@ -54,7 +54,7 @@ export default function DashboardPage() {
   return (
     <div className="space-y-8">
       <div>
-        <div className="text-sm text-ink-400 uppercase tracking-wider">
+        <div className="text-sm text-muted uppercase tracking-wider">
           {new Date().toLocaleDateString("pt-BR", {
             weekday: "long",
             day: "2-digit",
@@ -64,9 +64,9 @@ export default function DashboardPage() {
         <h1 className="heading text-3xl sm:text-5xl mt-1">
           {messages(profile.tone).greeting(profile.name)}
         </h1>
-        <div className="mt-2 text-ink-300 text-sm">
-          Objetivo: <span className="text-flame-400 font-semibold">{goalLabel(profile.goal)}</span>{" "}
-          · Nível <span className="text-ink-100 font-semibold">{lvl.level} {lvl.name}</span>
+        <div className="mt-2 text-muted-foreground text-sm">
+          Objetivo: <span className="text-accent font-semibold">{goalLabel(profile.goal)}</span>{" "}
+          · Nível <span className="text-foreground font-semibold">{lvl.level} {lvl.name}</span>
         </div>
       </div>
 
@@ -129,7 +129,7 @@ export default function DashboardPage() {
       <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="heading text-2xl">Desafios de hoje</h2>
-          <Link href="/desafios" className="text-sm text-flame-400 hover:text-flame-300">
+          <Link href="/desafios" className="text-sm text-accent hover:text-accent">
             Ver todos →
           </Link>
         </div>
@@ -140,15 +140,15 @@ export default function DashboardPage() {
               <Link
                 key={c.id}
                 href="/desafios"
-                className={`card flex items-start justify-between gap-3 hover:border-flame-500/40 transition ${
+                className={`card flex items-start justify-between gap-3 hover:border-accent/40 transition ${
                   done ? "opacity-60" : ""
                 }`}
               >
                 <div>
                   <div className="font-semibold">{c.title}</div>
-                  <div className="text-xs text-ink-400 mt-1">{c.description}</div>
+                  <div className="text-xs text-muted mt-1">{c.description}</div>
                 </div>
-                <div className="text-flame-400 font-bold text-sm shrink-0">+{c.xp}xp</div>
+                <div className="text-accent font-bold text-sm shrink-0">+{c.xp}xp</div>
               </Link>
             );
           })}
@@ -156,21 +156,21 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid sm:grid-cols-3 gap-3">
-        <Link href="/diario" className="card hover:border-flame-500/40 transition">
+        <Link href="/diario" className="card hover:border-accent/40 transition">
           <div className="font-semibold">Registrar o dia</div>
-          <div className="text-sm text-ink-400 mt-1">
+          <div className="text-sm text-muted mt-1">
             Peso, treino, dieta, sono e humor.
           </div>
         </Link>
-        <Link href="/progresso" className="card hover:border-flame-500/40 transition">
+        <Link href="/progresso" className="card hover:border-accent/40 transition">
           <div className="font-semibold">Ver progresso</div>
-          <div className="text-sm text-ink-400 mt-1">
+          <div className="text-sm text-muted mt-1">
             Gráficos, % de melhoria, evolução.
           </div>
         </Link>
-        <Link href="/avaliacao" className="card hover:border-flame-500/40 transition">
+        <Link href="/avaliacao" className="card hover:border-accent/40 transition">
           <div className="font-semibold">Autoavaliação</div>
-          <div className="text-sm text-ink-400 mt-1">
+          <div className="text-sm text-muted mt-1">
             Físico, mental, espiritual. Receba ajustes.
           </div>
         </Link>
