@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  min-height: 100%;
+  background: radial-gradient(ellipse at top, #18181c 0%, #050507 60%);
+  color: #f7f7f8;
+  font-family: var(--font-sans, system-ui);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition active:scale-[0.98];
+}
+.btn-primary {
+  @apply btn bg-flame-500 text-ink-950 hover:bg-flame-400 shadow-lg shadow-flame-500/25;
+}
+.btn-ghost {
+  @apply btn bg-white/5 text-ink-100 hover:bg-white/10 border border-white/10;
+}
+.btn-danger {
+  @apply btn bg-forge-500 text-white hover:bg-forge-400;
+}
+
+.field {
+  @apply w-full rounded-lg bg-ink-900 border border-white/10 px-3 py-2 text-ink-50 placeholder:text-ink-400 focus:outline-none focus:ring-2 focus:ring-flame-500/60 focus:border-flame-500/60 transition;
+}
+
+.label {
+  @apply block text-xs uppercase tracking-wider text-ink-300 mb-1.5 font-semibold;
+}
+
+.card {
+  @apply glass rounded-xl p-5;
+}
+
+.section-title {
+  @apply text-xs uppercase tracking-[0.18em] text-ink-400 font-semibold;
+}
+
+.heading {
+  @apply font-display tracking-wide;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
