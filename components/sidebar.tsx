@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { useStore } from "@/lib/store";
 import { levelFromXp, nextLevelInfo, tierColor } from "@/lib/levels";
 import { ThemeToggle } from "./theme-toggle";
+import { UserBlock } from "./user-block";
 
 const NAV = [
   { href: "/", label: "Dashboard", icon: Home },
@@ -109,9 +110,12 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="hidden lg:flex items-center justify-between gap-3 pt-3 border-t border-border">
-        <div className="text-xs text-muted">tema</div>
-        <ThemeToggle />
+      <div className="hidden lg:flex flex-col gap-3 pt-3 border-t border-border">
+        <UserBlock />
+        <div className="flex items-center justify-between gap-3">
+          <div className="text-xs text-muted">tema</div>
+          <ThemeToggle />
+        </div>
       </div>
     </aside>
   );

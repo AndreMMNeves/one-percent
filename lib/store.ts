@@ -13,6 +13,10 @@ import type {
 import { uid, todayISO } from "./utils";
 import { levelFromXp } from "./levels";
 
+interface CloudState {
+  cloudEnabled: boolean;
+}
+
 interface Actions {
   setProfile: (p: UserProfile) => void;
   updateProfile: (patch: Partial<UserProfile>) => void;
@@ -24,16 +28,25 @@ interface Actions {
   addNote: (note: Omit<Note, "id" | "createdAt">) => void;
   removeNote: (id: string) => void;
 
-  completeChallenge: (challengeId: string, xp: number, verifiedBy: ChallengeResult["verifiedBy"], proof?: string) => void;
+  completeChallenge: (
+    challengeId: string,
+    xp: number,
+    verifiedBy: ChallengeResult["verifiedBy"],
+    proof?: string,
+  ) => void;
   hasCompletedToday: (challengeId: string) => boolean;
 
   addAssessment: (a: Assessment) => void;
 
   awardXp: (amount: number) => { leveledUp: boolean; newLevelName?: string };
   markNotificationShown: () => void;
+
+  // cloud sync
+  setCloudEnabled: (b: boolean) => void;
+  replaceFromCloud: (partial: Partial<AppState>) => void;
 }
 
-const initial: AppState = {
+const initial: AppState & CloudState = {
   profile: undefined,
   xp: 0,
   logs: [],
@@ -41,20 +54,45 @@ const initial: AppState = {
   completedChallenges: [],
   assessments: [],
   hydrated: false,
+  cloudEnabled: false,
 };
 
-export const useStore = create<AppState & Actions>()(
+function fireSync(promise: Promise<unknown>) {
+  if (typeof window === "undefined") return;
+  promise.catch((err) => console.warn("[cloud sync] failed:", err));
+}
+
+export const useStore = create<AppState & CloudState & Actions>()(
   persist(
     (set, get) => ({
       ...initial,
 
-      setProfile: (p) => set({ profile: p }),
-      updateProfile: (patch) =>
-        set((s) => (s.profile ? { profile: { ...s.profile, ...patch } } : s)),
+      setProfile: (p) => {
+        set({ profile: p });
+        if (get().cloudEnabled) {
+          fireSync(
+            import("@/app/actions/profile").then(({ upsertProfile }) => upsertProfile(p)),
+          );
+        }
+      },
+
+      updateProfile: (patch) => {
+        const cur = get().profile;
+        if (!cur) return;
+        const next = { ...cur, ...patch };
+        set({ profile: next });
+        if (get().cloudEnabled) {
+          fireSync(
+            import("@/app/actions/profile").then(({ upsertProfile }) =>
+              upsertProfile(next),
+            ),
+          );
+        }
+      },
 
       resetAll: () => set({ ...initial, hydrated: true }),
 
-      upsertLog: (log) =>
+      upsertLog: (log) => {
         set((s) => {
           const idx = s.logs.findIndex((l) => l.date === log.date);
           const next = [...s.logs];
@@ -62,20 +100,48 @@ export const useStore = create<AppState & Actions>()(
           else next.push(log);
           next.sort((a, b) => a.date.localeCompare(b.date));
           return { logs: next };
-        }),
+        });
+        if (get().cloudEnabled) {
+          fireSync(
+            import("@/app/actions/logs").then(({ upsertLogAction }) =>
+              upsertLogAction(log),
+            ),
+          );
+        }
+      },
 
       getLog: (dateISO) => get().logs.find((l) => l.date === dateISO),
 
-      addNote: (note) =>
-        set((s) => ({
-          notes: [
-            { ...note, id: uid("note"), createdAt: new Date().toISOString() },
-            ...s.notes,
-          ],
-        })),
+      addNote: (note) => {
+        const local: Note = {
+          ...note,
+          id: uid("note"),
+          createdAt: new Date().toISOString(),
+        };
+        set((s) => ({ notes: [local, ...s.notes] }));
+        if (get().cloudEnabled) {
+          fireSync(
+            import("@/app/actions/notes").then(async ({ addNoteAction }) => {
+              const persisted = await addNoteAction(note);
+              // Swap local optimistic id with persisted id
+              set((s) => ({
+                notes: s.notes.map((n) => (n.id === local.id ? persisted : n)),
+              }));
+            }),
+          );
+        }
+      },
 
-      removeNote: (id) =>
-        set((s) => ({ notes: s.notes.filter((n) => n.id !== id) })),
+      removeNote: (id) => {
+        set((s) => ({ notes: s.notes.filter((n) => n.id !== id) }));
+        if (get().cloudEnabled) {
+          fireSync(
+            import("@/app/actions/notes").then(({ removeNoteAction }) =>
+              removeNoteAction(id),
+            ),
+          );
+        }
+      },
 
       completeChallenge: (challengeId, xp, verifiedBy, proof) => {
         const today = todayISO();
@@ -83,20 +149,26 @@ export const useStore = create<AppState & Actions>()(
           (c) => c.challengeId === challengeId && c.completedAt.slice(0, 10) === today,
         );
         if (already) return;
+        const local: ChallengeResult = {
+          id: uid("ch"),
+          challengeId,
+          completedAt: new Date().toISOString(),
+          verifiedBy,
+          proof,
+          xpAwarded: xp,
+        };
         set((s) => ({
-          completedChallenges: [
-            ...s.completedChallenges,
-            {
-              id: uid("ch"),
-              challengeId,
-              completedAt: new Date().toISOString(),
-              verifiedBy,
-              proof,
-              xpAwarded: xp,
-            },
-          ],
+          completedChallenges: [...s.completedChallenges, local],
           xp: s.xp + xp,
         }));
+        if (get().cloudEnabled) {
+          fireSync(
+            import("@/app/actions/challenges").then(
+              ({ completeChallengeAction }) =>
+                completeChallengeAction(challengeId, xp, verifiedBy, proof),
+            ),
+          );
+        }
       },
 
       hasCompletedToday: (challengeId) => {
@@ -106,13 +178,26 @@ export const useStore = create<AppState & Actions>()(
         );
       },
 
-      addAssessment: (a) =>
-        set((s) => ({ assessments: [...s.assessments, a] })),
+      addAssessment: (a) => {
+        set((s) => ({ assessments: [...s.assessments, a] }));
+        if (get().cloudEnabled) {
+          fireSync(
+            import("@/app/actions/assessments").then(({ addAssessmentAction }) =>
+              addAssessmentAction(a),
+            ),
+          );
+        }
+      },
 
       awardXp: (amount) => {
         const before = levelFromXp(get().xp);
         set((s) => ({ xp: s.xp + amount }));
         const after = levelFromXp(get().xp);
+        if (get().cloudEnabled) {
+          fireSync(
+            import("@/app/actions/profile").then(({ setXp }) => setXp(get().xp)),
+          );
+        }
         if (after.level > before.level) {
           return { leveledUp: true, newLevelName: after.name };
         }
@@ -121,6 +206,18 @@ export const useStore = create<AppState & Actions>()(
 
       markNotificationShown: () =>
         set({ lastNotificationAt: new Date().toISOString() }),
+
+      setCloudEnabled: (b) => set({ cloudEnabled: b }),
+
+      replaceFromCloud: (partial) =>
+        set((s) => ({
+          profile: partial.profile ?? s.profile,
+          xp: partial.xp ?? s.xp,
+          logs: partial.logs ?? s.logs,
+          notes: partial.notes ?? s.notes,
+          completedChallenges: partial.completedChallenges ?? s.completedChallenges,
+          assessments: partial.assessments ?? s.assessments,
+        })),
     }),
     {
       name: "one-percent-store",

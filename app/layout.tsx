@@ -4,6 +4,8 @@ import { Sidebar } from "@/components/sidebar";
 import { OnboardingGate } from "@/components/onboarding-gate";
 import { NotificationsHost } from "@/components/notifications-host";
 import { ThemeProvider } from "@/components/theme-provider";
+import { SessionProvider } from "@/components/session-provider";
+import { SessionSync } from "@/components/session-sync";
 
 export const metadata: Metadata = {
   title: "One Percent — 1% melhor todo dia",
@@ -31,17 +33,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>
-        <ThemeProvider>
-          <OnboardingGate>
-            <div className="min-h-screen flex flex-col lg:flex-row">
-              <Sidebar />
-              <main className="flex-1 px-4 sm:px-8 lg:px-12 py-6 lg:py-10 w-full">
-                <div className="max-w-[1600px] mx-auto">{children}</div>
-              </main>
-            </div>
-            <NotificationsHost />
-          </OnboardingGate>
-        </ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider>
+            <OnboardingGate>
+              <div className="min-h-screen flex flex-col lg:flex-row">
+                <Sidebar />
+                <main className="flex-1 px-4 sm:px-8 lg:px-12 py-6 lg:py-10 w-full">
+                  <div className="max-w-[1600px] mx-auto">{children}</div>
+                </main>
+              </div>
+              <NotificationsHost />
+              <SessionSync />
+            </OnboardingGate>
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );

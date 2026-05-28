@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useStore } from "@/lib/store";
 
+const PUBLIC_PATHS = ["/login", "/cadastro"];
+
 export function OnboardingGate({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
   const hydrated = useStore((s) => s.hydrated);
@@ -15,7 +17,8 @@ export function OnboardingGate({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!mounted || !hydrated) return;
-    if (!profile && pathname !== "/cadastro") {
+    const isPublic = PUBLIC_PATHS.includes(pathname);
+    if (!profile && !isPublic) {
       router.replace("/cadastro");
     }
     if (profile && pathname === "/cadastro") {
